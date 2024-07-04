@@ -9,7 +9,7 @@ services:
     depends_on:
       - mysql
     environment:
-      - DB_HOST=127.0.0.1
+      - DB_HOST=mysql
       - DB_PORT=3306
       - DB_DATABASE=laravel
       - DB_USERNAME=root
@@ -31,12 +31,16 @@ services:
     build:
       context: ./nextjs
       dockerfile: Dockerfile
+    restart: always
     volumes:
       - ./nextjs:/var/www/html
       # Add any additional volumes if needed
     ports:
       - 3000:3000
-    # environment:
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     #   - NODE_ENV=production
 
   # Nginx Service
